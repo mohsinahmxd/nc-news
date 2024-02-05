@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import ArticleCard from "./ArticleCard";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Articles({ setArticleId }) {
   const [articles, setArticles] = useState();
 
   useEffect(() => {
-    axios
-      .get("https://my-web-service-dwf8.onrender.com/api/articles")
+    axiosInstance
+      .get("/articles")
       .then((response) => {
         setArticles(response.data.articles);
       })
@@ -25,28 +27,18 @@ export default function Articles({ setArticleId }) {
       {articles &&
         articles.map((article, i) => {
           return (
-            <div key={i}>
-              <h2>Article {i + 1}</h2>
-              <p> Article author: {article.author}</p>
+            <>
+              <ArticleCard key={i} article={article} />
               <Link to={`/articles/${article.article_id}`}>
                 <p
                   onClick={() => {
                     setArticleId(article.article_id);
                   }}
                 >
-                  Article title: {article.title}
+                  Click to view article
                 </p>
               </Link>
-              <p>Article ID: {article.article_id}</p>
-              <p>Topic: {article.topic}</p>
-              <p>Created at: {article.created_at}</p>
-              <p>Votes: {article.votes}</p>
-              <img
-                src={article.article_img_url}
-                alt={`Article ${article.title} image`}
-              />
-              <p>Comment count: {article.comment_count}</p>
-            </div>
+            </>
           );
         })}
     </>

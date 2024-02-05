@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
+import ArticleCard from "./ArticleCard";
+import ncnewsApi from "../utils/axiosInstance";
 
 export default function Article({ articleId }) {
   const [article, setArticle] = useState();
 
   useEffect(() => {
-    axios
-      .get(`https://my-web-service-dwf8.onrender.com/api/articles/${articleId}`)
+    ncnewsApi
+      .get(`/articles/${articleId}`)
       .then((response) => {
         setArticle(response.data.article[0]);
       })
@@ -23,19 +25,10 @@ export default function Article({ articleId }) {
       <Navbar></Navbar>
 
       {article && (
-        <div>
-          <img
-            src={article.article_img_url}
-            alt={`Article ${article.title} image`}
-          />
-          <p>Article author: {article.author}</p>
-          <h2>{article.title}</h2>
-          <p>Topic: {article.topic}</p>
-          <p>Created at: {article.created_at}</p>
-          <p>Votes: {article.votes}</p>
+        <>
+          <ArticleCard article={article} />
           <p>{article.body}</p>
-          <p>Comment count: {article.comment_count || 0}</p>
-        </div>
+        </>
       )}
     </>
   );
