@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
-export default function Articles() {
+export default function Articles({ setArticleId }) {
   const [articles, setArticles] = useState();
 
   useEffect(() => {
@@ -27,7 +28,15 @@ export default function Articles() {
             <div key={i}>
               <h2>Article {i + 1}</h2>
               <p> Article author: {article.author}</p>
-              <p>Article title: {article.title}</p>
+              <Link to={`/articles/${article.article_id}`}>
+                <p
+                  onClick={() => {
+                    setArticleId(article.article_id);
+                  }}
+                >
+                  Article title: {article.title}
+                </p>
+              </Link>
               <p>Article ID: {article.article_id}</p>
               <p>Topic: {article.topic}</p>
               <p>Created at: {article.created_at}</p>
