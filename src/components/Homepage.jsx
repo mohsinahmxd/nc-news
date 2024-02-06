@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 export default function Homepage() {
   return (
     <>
-      <h2>Welcome!</h2>
+      <Typography variant="h4">Welcome!</Typography>
 
-      <p>
+      <Typography>
         <Link to="/articles">Click here to view all articles</Link>
-      </p>
+      </Typography>
     </>
   );
 }

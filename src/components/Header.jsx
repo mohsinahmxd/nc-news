@@ -1,8 +1,10 @@
+import { Typography } from "@mui/material";
+
 export default function Header() {
   return (
     <header>
-      <h1>NC News</h1>
-      <p>The #1 news source!</p>
+      <Typography variant="h2">NC News</Typography>
+      <Typography>The #1 news source!</Typography>
     </header>
   );
 }

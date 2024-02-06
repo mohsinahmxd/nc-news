@@ -21,3 +21,14 @@ export const getAllArticles = () => {
       console.log("there's an err", err);
     });
 };
+
+export const getCommentsForArticle = (article_id) => {
+  return ncnewsApi
+    .get(`/articles/${article_id}/comments`)
+    .then((response) => {
+      return response.data.comments;
+    })
+    .catch((err) => {
+      console.log("there's an err", err);
+    });
+};
