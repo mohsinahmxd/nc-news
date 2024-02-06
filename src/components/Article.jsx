@@ -1,34 +1,31 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import Header from "./Header";
-import Navbar from "./Navbar";
 import ArticleCard from "./ArticleCard";
-import ncnewsApi from "../utils/axiosInstance";
+import { useParams } from "react-router-dom";
+import { getArticleViaId } from "../utils/api";
 
-export default function Article({ articleId }) {
+export default function Article() {
   const [article, setArticle] = useState();
+  const { article_id } = useParams();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    ncnewsApi
-      .get(`/articles/${articleId}`)
-      .then((response) => {
-        setArticle(response.data.article[0]);
-      })
-      .catch((err) => {
-        console.log("there's an err", err);
-      });
+    getArticleViaId(article_id).then((data) => {
+      setArticle(data);
+      setLoading(false);
+    });
   }, []);
 
   return (
     <>
-      <Header></Header>
-      <Navbar></Navbar>
-
-      {article && (
-        <>
-          <ArticleCard article={article} />
-          <p>{article.body}</p>
-        </>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        article && (
+          <>
+            <ArticleCard article={article} />
+            <p>{article.body}</p>
+          </>
+        )
       )}
     </>
   );

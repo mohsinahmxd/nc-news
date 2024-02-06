@@ -1,46 +1,36 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import Header from "./Header";
-import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import ArticleCard from "./ArticleCard";
-import axiosInstance from "../utils/axiosInstance";
+import { getAllArticles } from "../utils/api";
 
-export default function Articles({ setArticleId }) {
+export default function Articles() {
   const [articles, setArticles] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axiosInstance
-      .get("/articles")
-      .then((response) => {
-        setArticles(response.data.articles);
-      })
-      .catch((err) => {
-        console.log("there's an err", err);
-      });
+    getAllArticles().then((data) => {
+      setArticles(data);
+      setLoading(false);
+    });
   }, []);
 
   return (
     <>
-      <Header></Header>
-      <Navbar></Navbar>
-      {articles &&
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        articles &&
         articles.map((article, i) => {
           return (
-            <>
-              <ArticleCard key={i} article={article} />
+            <div key={i}>
+              <ArticleCard article={article} />
               <Link to={`/articles/${article.article_id}`}>
-                <p
-                  onClick={() => {
-                    setArticleId(article.article_id);
-                  }}
-                >
-                  Click to view article
-                </p>
+                <p>Click to view article</p>
               </Link>
-            </>
+            </div>
           );
-        })}
+        })
+      )}
     </>
   );
 }
