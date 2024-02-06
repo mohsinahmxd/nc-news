@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArticleCard from "./ArticleCard";
 import { getAllArticles } from "../utils/api";
+import { Container, Grid, Typography } from "@mui/material";
 
 export default function Articles() {
   const [articles, setArticles] = useState();
@@ -14,23 +15,18 @@ export default function Articles() {
     });
   }, []);
 
-  return (
-    <>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        articles &&
-        articles.map((article, i) => {
-          return (
-            <div key={i}>
+  return loading ? (
+    <Typography>Loading...</Typography>
+  ) : (
+    <Container>
+      <Grid container spacing={4}>
+        {articles &&
+          articles.map((article, i) => (
+            <Grid item key={i} xs={12} md={6} lg={4}>
               <ArticleCard article={article} />
-              <Link to={`/articles/${article.article_id}`}>
-                <p>Click to view article</p>
-              </Link>
-            </div>
-          );
-        })
-      )}
-    </>
+            </Grid>
+          ))}
+      </Grid>
+    </Container>
   );
 }
