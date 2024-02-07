@@ -40,7 +40,10 @@ const ArticleCard = ({ article }) => {
         setVotes((currVotes) => currVotes + 1);
       }
 
-      setErrors((prevErrors) => [...prevErrors, err.message]);
+      setErrors((prevErrors) => [
+        ...prevErrors,
+        `${err.message}: Error voting on article`,
+      ]);
     });
   }
 
