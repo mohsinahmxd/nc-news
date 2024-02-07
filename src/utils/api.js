@@ -32,3 +32,17 @@ export const getCommentsForArticle = (article_id) => {
       console.log("there's an err", err);
     });
 };
+
+export const voteOnArticle = (choice, article_id) => {
+  let data = {};
+
+  if (choice === "upvote") {
+    data.inc_votes = 1;
+  } else {
+    data.inc_votes = -1;
+  }
+
+  return ncnewsApi.patch(`/articles/${article_id}`, data).then((response) => {
+    // console.log(response);
+  });
+};
