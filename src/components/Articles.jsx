@@ -1,32 +1,59 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import ArticleCard from "./ArticleCard";
 import { getAllArticles } from "../utils/api";
 import { Container, Grid, Typography } from "@mui/material";
+import ErrorMsg from "./ErrorMsg";
 
 export default function Articles() {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getAllArticles().then((data) => {
-      setArticles(data);
-      setLoading(false);
-    });
+    getAllArticles()
+      .then((data) => {
+        setArticles(data);
+      })
+      .catch((err) => {
+        setError(`${err.message}: Error fetching articles`);
+      });
+
+    setLoading(false);
   }, []);
 
-  return loading ? (
-    <Typography>Loading...</Typography>
-  ) : (
-    <Container>
-      <Grid container spacing={4}>
-        {articles &&
-          articles.map((article, i) => (
-            <Grid item key={i} xs={12} md={6} lg={4}>
-              <ArticleCard article={article} />
-            </Grid>
-          ))}
-      </Grid>
-    </Container>
+  return (
+    <>
+      {loading && <Typography>Loading articles...</Typography>}
+
+      {!loading && error && <ErrorMsg message={error}></ErrorMsg>}
+
+      {!loading && !error && (
+        <Container>
+          <Grid container spacing={4}>
+            {articles &&
+              articles.map((article, i) => (
+                <Grid item key={i} xs={12} md={6} lg={4}>
+                  <ArticleCard article={article} />
+                </Grid>
+              ))}
+          </Grid>
+        </Container>
+      )}
+    </>
   );
 }
+
+// loading ? (
+//   <Typography>Loading...</Typography>
+// ) : (
+//   <Container>
+//     <Grid container spacing={4}>
+//       {articles &&
+//         articles.map((article, i) => (
+//           <Grid item key={i} xs={12} md={6} lg={4}>
+//             <ArticleCard article={article} />
+//           </Grid>
+//         ))}
+//     </Grid>
+//   </Container>
+// );
