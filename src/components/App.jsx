@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./Homepage";
 import Articles from "./Articles";
-import Article from "./Article";
 import Header from "./Header";
 import Navbar from "./Navbar";
+import SingleArticle from "./SingleArticle";
 
 function App() {
   const [topic, setTopic] = useState();
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage setTopic={setTopic} />} />
         <Route path="/articles" element={<Articles />} />
-        <Route path="/articles/:article_id" element={<Article />} />
+        <Route path="/articles/:article_id" element={<SingleArticle />} />
       </Routes>
     </>
   );

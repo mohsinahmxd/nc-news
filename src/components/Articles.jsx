@@ -42,18 +42,3 @@ export default function Articles() {
     </>
   );
 }
-
-// loading ? (
-//   <Typography>Loading...</Typography>
-// ) : (
-//   <Container>
-//     <Grid container spacing={4}>
-//       {articles &&
-//         articles.map((article, i) => (
-//           <Grid item key={i} xs={12} md={6} lg={4}>
-//             <ArticleCard article={article} />
-//           </Grid>
-//         ))}
-//     </Grid>
-//   </Container>
-// );
