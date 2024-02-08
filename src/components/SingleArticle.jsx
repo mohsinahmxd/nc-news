@@ -92,7 +92,7 @@ export default function SingleArticle() {
             ></PostComment>
             {comments.map((comment, i) => (
               <div key={i}>
-                <CommentCard comment={comment} />
+                <CommentCard comment={comment} setComments={setComments} />
               </div>
             ))}
           </>

@@ -50,3 +50,7 @@ export const PostNewComment = (comment, article_id) => {
       // console.log(err);
     });
 };
+
+export const DeleteCommentApi = (comment_id) => {
+  return ncnewsApi.delete(`/comments/${comment_id}`);
+};
