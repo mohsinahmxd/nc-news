@@ -31,3 +31,22 @@ export const voteOnArticle = (choice, article_id) => {
     // console.log(response);
   });
 };
+
+export const PostNewComment = (comment, article_id) => {
+  // console.log(article_id);
+  // console.log(comment);
+  let data = {
+    username: "grumpy19",
+    body: comment,
+  };
+
+  return ncnewsApi
+    .post(`/articles/${article_id}/comments`, data)
+    .then((data) => {
+      // console.log(data.data.comment[0]);
+      return data.data.comment[0];
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
