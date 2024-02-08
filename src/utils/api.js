@@ -47,6 +47,6 @@ export const PostNewComment = (comment, article_id) => {
       return data.data.comment[0];
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 };
