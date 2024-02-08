@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { useState } from "react";
 import { PostNewComment } from "../utils/api";
 import SuccessMsg from "./SuccessMsg";
@@ -6,6 +6,7 @@ import SuccessMsg from "./SuccessMsg";
 export default function PostComment({ setComments, articleId }) {
   const [newComment, setNewComment] = useState("");
   const [success, setSuccess] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleChange(event) {
     setNewComment(event.target.value);
@@ -13,6 +14,7 @@ export default function PostComment({ setComments, articleId }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    setIsSubmitting(true);
 
     PostNewComment(newComment, articleId)
       .then((data) => {
@@ -21,8 +23,10 @@ export default function PostComment({ setComments, articleId }) {
           `Posted comment successfully`,
         ]);
         setComments((prevComments) => {
-          return [...prevComments, data];
+          return [data, ...prevComments];
         });
+        setNewComment("");
+        setIsSubmitting(false);
       })
       .catch((err) => {
         console.log(err);
@@ -61,8 +65,10 @@ export default function PostComment({ setComments, articleId }) {
           variant="contained"
           color="primary"
           type="submit"
+          disabled={isSubmitting || newComment === ""}
+          startIcon={isSubmitting && <CircularProgress size={20} />}
         >
-          Post Comment
+          {isSubmitting ? "Posting..." : "Post Comment"}
         </Button>
       </form>
     </>
