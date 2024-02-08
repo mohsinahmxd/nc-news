@@ -6,10 +6,13 @@ export const getArticleViaId = (article_id) => {
   });
 };
 
-export const getAllArticles = () => {
-  return ncnewsApi.get("/articles").then((response) => {
-    return response.data.articles;
-  });
+export const getAllArticles = (topic) => {
+  // console.log(topic);
+  return ncnewsApi
+    .get(`/articles${topic ? `?topic=${topic}` : ""}`)
+    .then((response) => {
+      return response.data.articles;
+    });
 };
 
 export const getCommentsForArticle = (article_id) => {
@@ -53,4 +56,10 @@ export const PostNewComment = (comment, article_id) => {
 
 export const DeleteCommentApi = (comment_id) => {
   return ncnewsApi.delete(`/comments/${comment_id}`);
+};
+
+export const getAllTopics = () => {
+  return ncnewsApi.get("/topics").then((data) => {
+    return data.data.topics;
+  });
 };

@@ -3,14 +3,16 @@ import ArticleCard from "./ArticleCard";
 import { getAllArticles } from "../utils/api";
 import { Container, Grid, Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
+import { useParams } from "react-router-dom";
 
 export default function Articles() {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { topic } = useParams();
 
   useEffect(() => {
-    getAllArticles()
+    getAllArticles(topic)
       .then((data) => {
         setArticles(data);
       })
