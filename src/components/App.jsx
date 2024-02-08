@@ -7,16 +7,15 @@ import Navbar from "./Navbar";
 import SingleArticle from "./SingleArticle";
 
 function App() {
-  const [topic, setTopic] = useState();
-
   return (
     <>
       <Header></Header>
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" element={<Homepage setTopic={setTopic} />} />
+        <Route path="/" element={<Homepage />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:article_id" element={<SingleArticle />} />
+        <Route path="/:topic" element={<Articles />} />
       </Routes>
     </>
   );
