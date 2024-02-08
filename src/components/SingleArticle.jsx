@@ -5,6 +5,7 @@ import { getArticleViaId, getCommentsForArticle } from "../utils/api";
 import CommentCard from "./CommentCard";
 import { Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
+import PostComment from "./PostComment";
 
 export default function SingleArticle() {
   const [article, setArticle] = useState();
@@ -84,8 +85,11 @@ export default function SingleArticle() {
           <>
             <ArticleCard article={article} />
             <Typography>{article.body}</Typography>
-
             <Typography variant="h5">Comments: {comments.length}</Typography>
+            <PostComment
+              setComments={setComments}
+              articleId={article_id}
+            ></PostComment>
             {comments.map((comment, i) => (
               <div key={i}>
                 <CommentCard comment={comment} />
