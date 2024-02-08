@@ -5,17 +5,16 @@ import {
   CardContent,
   CardActions,
   CardActionArea,
-  Button,
 } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { voteOnArticle } from "../utils/api";
+import ArticleVote from "./ArticleVote";
+import { useState } from "react";
 import ErrorMsg from "./ErrorMsg";
 
 const ArticleCard = ({ article }) => {
+  const [errors, setErrors] = useState([]);
   const [votes, setVotes] = useState(article.votes);
   let createdAtDate = new Date(article.created_at);
-  const [errors, setErrors] = useState([]);
 
   const options = {
     year: "numeric",
@@ -26,27 +25,6 @@ const ArticleCard = ({ article }) => {
   };
   let formattedCreatedAt = createdAtDate.toLocaleDateString("en-GB", options);
 
-  function handleVote(choice, articleId) {
-    if (choice === "upvote") {
-      setVotes((currVotes) => currVotes + 1);
-    } else {
-      setVotes((currVotes) => currVotes - 1);
-    }
-
-    voteOnArticle(choice, articleId).catch((err) => {
-      if (choice === "upvote") {
-        setVotes((currVotes) => currVotes - 1);
-      } else {
-        setVotes((currVotes) => currVotes + 1);
-      }
-
-      setErrors((prevErrors) => [
-        ...prevErrors,
-        `${err.message}: Error voting on article`,
-      ]);
-    });
-  }
-
   return (
     <>
       {errors.map((err, index) => {
@@ -56,7 +34,6 @@ const ArticleCard = ({ article }) => {
           </div>
         );
       })}
-
       <Card
         sx={{
           maxWidth: 345,
@@ -93,24 +70,12 @@ const ArticleCard = ({ article }) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
-              handleVote("upvote", article.article_id);
-            }}
-          >
-            Upvote
-          </Button>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
-              handleVote("downvote", article.article_id);
-            }}
-          >
-            Downvote
-          </Button>
+          <ArticleVote
+            articleId={article.article_id}
+            setVotes={setVotes}
+            votes={votes}
+            setErrors={setErrors}
+          ></ArticleVote>
         </CardActions>
       </Card>
     </>

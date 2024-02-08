@@ -6,7 +6,7 @@ import CommentCard from "./CommentCard";
 import { Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
 
-export default function Article() {
+export default function SingleArticle() {
   const [article, setArticle] = useState();
   const [comments, setComments] = useState();
   const { article_id } = useParams();
@@ -96,20 +96,3 @@ export default function Article() {
     </>
   );
 }
-
-// {loading ? (
-//   <Typography>Loading...</Typography>
-// ) : (
-//   <>
-//     <ArticleCard article={article} />
-//     <Typography>{article.body}</Typography>
-//     <Typography variant="h5">Comments: {comments.length}</Typography>
-//     {comments.map((comment, i) => {
-//       return (
-//         <div key={i}>
-//           <CommentCard comment={comment}></CommentCard>
-//         </div>
-//       );
-//     })}
-//   </>
-// )}
