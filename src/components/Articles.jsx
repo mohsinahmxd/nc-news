@@ -3,19 +3,14 @@ import ArticleCard from "./ArticleCard";
 import { getAllArticles } from "../utils/api";
 import { Container, Grid, MenuItem, Select, Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
-import { useParams, useSearchParams } from "react-router-dom";
 import ArticleTopics from "./ArticleTopics";
 
-export default function Articles() {
+export default function Articles({ searchParams, setSearchParams }) {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { topic } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams({
-    sort_by: "created_at",
-    order: "DESC",
-  });
 
+  const topic = searchParams.get("topic");
   const sortByQuery = searchParams.get("sort_by");
   const orderByQuery = searchParams.get("order");
 
@@ -49,7 +44,7 @@ export default function Articles() {
 
   return (
     <>
-      <ArticleTopics></ArticleTopics>
+      <ArticleTopics setSearchParams={setSearchParams}></ArticleTopics>
       <Typography variant="h4">Sort Articles</Typography>
       <Select value={sortByQuery || ""} onChange={handleSortChange}>
         <MenuItem value="created_at">Date</MenuItem>
