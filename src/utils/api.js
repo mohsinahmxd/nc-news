@@ -7,24 +7,16 @@ export const getArticleViaId = (article_id) => {
 };
 
 export const getAllArticles = (topic, sortByQuery, orderByQuery) => {
-  // console.log(topic);
-  let url = `/articles${topic ? `?topic=${topic}` : ""}`;
-
-  if (sortByQuery && orderByQuery) {
-    url += `${topic ? "&" : "?"}sort_by=${sortByQuery}&order=${orderByQuery}`;
-  } else if (sortByQuery) {
-    url += `${topic ? "&" : "?"}sort_by=${sortByQuery}`;
-  } else if (orderByQuery) {
-    url += `${topic ? "&" : "?"}order=${orderByQuery}`;
-  }
-
   return ncnewsApi
-    .get(url)
-    .then((response) => {
-      return response.data.articles;
+    .get(`/articles`, {
+      params: {
+        topic: topic,
+        sort_by: sortByQuery,
+        order: orderByQuery,
+      },
     })
-    .catch((err) => {
-      console.log(err);
+    .then((data) => {
+      return data.data.articles;
     });
 };
 

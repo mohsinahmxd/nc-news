@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import ArticleTopics from "./ArticleTopics";
 
-export default function Homepage() {
+export default function Homepage({ setSearchParams }) {
   return (
     <>
       <Typography variant="h4">Welcome!</Typography>
@@ -10,7 +10,7 @@ export default function Homepage() {
       <Typography>
         <Link to="/articles">Click here to view all articles</Link>
       </Typography>
-      <ArticleTopics></ArticleTopics>
+      <ArticleTopics setSearchParams={setSearchParams}></ArticleTopics>
     </>
   );
 }
