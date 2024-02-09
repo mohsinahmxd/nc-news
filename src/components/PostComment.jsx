@@ -1,6 +1,6 @@
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { useState } from "react";
-import { PostNewComment } from "../utils/api";
+import { postNewComment } from "../utils/api";
 import SuccessMsg from "./SuccessMsg";
 
 export default function PostComment({ setComments, articleId }) {
@@ -16,7 +16,7 @@ export default function PostComment({ setComments, articleId }) {
     event.preventDefault();
     setIsSubmitting(true);
 
-    PostNewComment(newComment, articleId)
+    postNewComment(newComment, articleId)
       .then((data) => {
         setSuccess((prevSuccess) => [
           ...prevSuccess,

@@ -1,6 +1,6 @@
 import { DeleteOutlineSharp } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
-import { DeleteCommentApi } from "../utils/api";
+import { deleteCommentApi } from "../utils/api";
 
 export default function DeleteComment({ commentId, setComments }) {
   function handleClick(event) {
@@ -11,7 +11,7 @@ export default function DeleteComment({ commentId, setComments }) {
       });
     });
 
-    DeleteCommentApi(commentId).then(() => {});
+    deleteCommentApi(commentId).then(() => {});
   }
 
   return (

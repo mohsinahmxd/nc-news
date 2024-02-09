@@ -8,12 +8,17 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import ArticleVote from "./ArticleVote";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ErrorMsg from "./ErrorMsg";
 
 const ArticleCard = ({ article }) => {
   const [errors, setErrors] = useState([]);
   const [votes, setVotes] = useState(article.votes);
+
+  useEffect(() => {
+    setVotes(article.votes);
+  }, [article.votes]);
+
   let createdAtDate = new Date(article.created_at);
 
   const options = {
