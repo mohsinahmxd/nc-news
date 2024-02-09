@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getArticleViaId, getCommentsForArticle } from "../utils/api";
 import CommentCard from "./CommentCard";
 import { Typography } from "@mui/material";
@@ -15,6 +15,7 @@ export default function SingleArticle() {
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [articleError, setArticleError] = useState(false);
   const [commentsError, setCommentsError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getArticleViaId(article_id)
@@ -25,6 +26,7 @@ export default function SingleArticle() {
       .catch((err) => {
         setArticleError(`${err.message}: Error loading article`);
         setArticleLoading(false);
+        navigate("/notfound");
       });
   }, []);
 

@@ -4,6 +4,7 @@ import { getAllArticles } from "../utils/api";
 import { Container, Grid, MenuItem, Select, Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
 import ArticleTopics from "./ArticleTopics";
+import { useNavigate } from "react-router-dom";
 
 export default function Articles({ searchParams, setSearchParams }) {
   const [articles, setArticles] = useState();
