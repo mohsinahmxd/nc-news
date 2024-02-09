@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
 import { getAllArticles } from "../utils/api";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, MenuItem, Select, Typography } from "@mui/material";
 import ErrorMsg from "./ErrorMsg";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import ArticleTopics from "./ArticleTopics";
 
 export default function Articles() {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const { topic } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams({
+    sort_by: "created_at",
+    order: "DESC",
+  });
+
+  const sortByQuery = searchParams.get("sort_by");
+  const orderByQuery = searchParams.get("order");
 
   useEffect(() => {
-    getAllArticles(topic)
+    getAllArticles(topic, sortByQuery, orderByQuery)
       .then((data) => {
         setArticles(data);
       })
@@ -21,10 +29,37 @@ export default function Articles() {
       });
 
     setLoading(false);
-  }, []);
+  }, [topic, sortByQuery, orderByQuery]);
+
+  const handleSortChange = (event) => {
+    const newSortBy = event.target.value;
+    setSearchParams((params) => {
+      params.set("sort_by", newSortBy);
+      return params;
+    });
+  };
+
+  const handleOrderChange = (event) => {
+    const newOrder = event.target.value;
+    setSearchParams((params) => {
+      params.set("order", newOrder);
+      return params;
+    });
+  };
 
   return (
     <>
+      <ArticleTopics></ArticleTopics>
+      <Typography variant="h4">Sort Articles</Typography>
+      <Select value={sortByQuery || ""} onChange={handleSortChange}>
+        <MenuItem value="created_at">Date</MenuItem>
+        <MenuItem value="comment_count">Comment Count</MenuItem>
+        <MenuItem value="votes">Votes</MenuItem>
+      </Select>
+      <Select value={orderByQuery || ""} onChange={handleOrderChange}>
+        <MenuItem value="ASC">Ascending</MenuItem>
+        <MenuItem value="DESC">Descending</MenuItem>
+      </Select>
       {loading && <Typography>Loading articles...</Typography>}
 
       {!loading && error && <ErrorMsg message={error}></ErrorMsg>}
