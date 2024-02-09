@@ -31,6 +31,7 @@ function App() {
         />
         <Route path="/articles/:article_id" element={<SingleArticle />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/notfound" element={<NotFound />} />
       </Routes>
     </>
   );
